@@ -8,18 +8,6 @@ import json
 INITIAL_MSG = "I want to enroll my Quest device"
 
 
-if "client" not in st.session_state:
-    st.session_state['client'] = \
-        OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
-
-if "assistant" not in st.session_state:
-    st.session_state['assistant'] = \
-        st.session_state.client.beta.assistants.retrieve('asst_pArjrUQzOBeE34nlGc9vz68y')
-
-if "thread" not in st.session_state:
-    st.session_state["thread"] = \
-        st.session_state['client'].beta.threads.create()
-
 # Initialize chat history
 if "messages" not in st.session_state:
     st.session_state.messages = []
@@ -33,6 +21,18 @@ if 'first_assistant_run_finished' not in st.session_state:
 
 if 'assistant_finished' not in st.session_state:
     st.session_state.assistant_finished = False
+
+if not st.session_state.show_intro_button and "client" not in st.session_state:
+    st.session_state['client'] = \
+        OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+
+if not st.session_state.show_intro_button and "assistant" not in st.session_state:
+    st.session_state['assistant'] = \
+        st.session_state.client.beta.assistants.retrieve('asst_pArjrUQzOBeE34nlGc9vz68y')
+
+if not st.session_state.show_intro_button and "thread" not in st.session_state:
+    st.session_state["thread"] = \
+        st.session_state['client'].beta.threads.create()
 
 
 def on_intro_button_click():
